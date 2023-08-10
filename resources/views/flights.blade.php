@@ -1,8 +1,7 @@
-@extends('layouts.app')
-
-@section('content')
+@extends('layouts.app') 
+@section('content') 
 <style>
-.flight-bg {
+  .flight-bg {
     background-color: #fefbfb;
     padding: 5px 20px 5px 10px;
     box-shadow: 0px 0px 1px 1px #ddd;
@@ -10,8 +9,9 @@
     text-align: center;
     margin-bottom: 20px;
     position: relative;
-}
-.agentfare {
+  }
+
+  .agentfare {
     position: absolute;
     right: 0px;
     margin-top: -6px;
@@ -20,51 +20,60 @@
     padding: 0px 3px 7px 10px;
     border-radius: 0px 13px 0px 50px;
     z-index: 1;
-}
-.collapse:not(.show) {
+  }
+
+  .collapse:not(.show) {
     display: none;
-}
-.agentfared {
+  }
+
+  .agentfared {
     background-color: #e3e4ff;
     padding: 5px;
     margin: -5px -20px 5px -10px;
     border-radius: 6px 0px 0px 0px;
     font-size: 13px;
-}
-.flight-bg .col-6, .flight-bg .col-12 {
+  }
+
+  .flight-bg .col-6,
+  .flight-bg .col-12 {
     padding-left: 5px;
     padding-right: 5px;
-}
-.flight-bg .flogo {
+  }
+
+  .flight-bg .flogo {
     width: 55px;
     height: 50px;
     border-radius: 50%;
     box-shadow: 0px 3px 3px 0px #d2cece;
-}
-.flight-bg .ft {
+  }
+
+  .flight-bg .ft {
     font-size: 20px;
     margin-top: 5px;
-}
+  }
 
-.flight-bg span {
+  .flight-bg span {
     display: block;
-}
-.flight-bg .price small {
+  }
+
+  .flight-bg .price small {
     text-decoration: line-through;
     margin-top: 15px;
     display: block;
-}
+  }
 
-.small, small {
+  .small,
+  small {
     font-size: 80%;
     font-weight: 400;
-}
+  }
 
-.button-sm {
+  .button-sm {
     padding: 14px 39px 13px;
     font-size: 14px;
-}
-.flight-bg .book {
+  }
+
+  .flight-bg .book {
     background-color: #c62a82;
     color: #fff;
     display: block;
@@ -72,28 +81,32 @@
     border-radius: 55px;
     margin-top: 20px;
     transition: all .4s;
-}
-.flight-detail-bg {
+  }
+
+  .flight-detail-bg {
     padding: 10px 0px 5px;
     border-top: 1px solid #e0e0e0;
     margin-top: 10px;
-}
-.flight-detail-bg h2 {
+  }
+
+  .flight-detail-bg h2 {
     font-size: 15px;
     margin: 0px;
-}
-.flight-detail-bg .details {
+  }
+
+  .flight-detail-bg .details {
     float: right;
     color: #5c5a5a;
     font-size: 13px;
-}
-.flight-detail-bg .details {
+  }
+
+  .flight-detail-bg .details {
     float: right;
     color: #5c5a5a;
     font-size: 13px;
-}
-.flight-search
-{
+  }
+
+  .flight-search {
     background-color: #c62a82;
     color: #fff;
     display: block;
@@ -103,288 +116,249 @@
     transition: all .4s;
     margin-top: 24px;
     width: 100%;
-}
-.flight-price-bg {
+  }
+
+  .flight-price-bg {
     padding: 0px 15px 5px;
     border-bottom: 1px solid #e0e0e0;
     margin-top: 10px;
     /* text-align: left; */
-}
-.price
-{
+  }
+
+  .price {
     text-align: left;
-}
-.flight-price-number>div {
+  }
+
+  .flight-price-number>div {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-}
-span.total-price
-{
+  }
+
+  span.total-price {
     color: #2cb8e2;
     font-weight: 800;
     font-size: 20px;
+  }
 
-}
-.package-disclaimer
-{
+  .package-disclaimer {
     font-size: 12px;
     color: #555;
     display: inline-block;
     width: 100%;
-}
-.partial-price {
+  }
+
+  .partial-price {
     font-weight: 400;
     font-size: 1em;
-}
-.dep-div
-{
+  }
+
+  .dep-div {
     padding-top: 15px;
+  }
+
+  .duration {
+    padding-bottom: 5px;
+  }
+
+  .filter-bg
+  {
+    background-color: #fefbfb;
+    padding: 5px 20px 5px 10px;
+    box-shadow: 0px 0px 1px 1px #ddd;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .f-head
+  {
+    font-size: 16px;
+    color: #000;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .filters-section
+  {
+    padding: 0px 15px 5px;
+    margin-top: 10px;
+  }
+  .main-airlines-section {
+    padding-bottom: 5px;
+  }
+  
+.middle3px {
+    margin-top: -3px;
 }
-.duration
+.airln-ck
 {
-    padding-bottom:5px;
+    width: 15px;
+    height: 15px;
+    vertical-align: bottom;
+    position: relative;
+    top: -14px;
+}
+.airln-lb
+{
+    padding-left: 20px;
+    text-indent: -15px;
+    display: inline-block;
 }
 
-</style>
-<?php
-use Carbon\Carbon;
-?>
-    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</style> 
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         Start Banner
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-    <section class="banner-section inner-banner-section bg-overlay-black bg_img" style="background-image:url({{ asset('assets/images/bg/inner-bg.png')}} )" 
-            >
-            <div class="container-fluid">
-                <div class="row justify-content-center align-items-center">
-                    <div class="col-xl-12 text-center">
-                        <div class="banner-content">
-                            <h1 class="title">Flights</h1>
-                            <div class="breadcrumb-area">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Flights</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<section class="banner-section inner-banner-section bg-overlay-black bg_img" style="background-image:url({{ asset('assets/images/bg/inner-bg.png')}} )">
+  <div class="container-fluid">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-xl-12 text-center">
+        <div class="banner-content">
+          <h1 class="title">Flights</h1>
+          <div class="breadcrumb-area">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="index-2.html">Home</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Flights</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         End Banner
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-
-     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         Start Scroll-To-Top
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-    <a href="#" class="scrollToTop">
-            <i class="las la-dot-circle"></i>
-            <span>Top</span>
-        </a>
-        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<a href="#" class="scrollToTop">
+  <i class="las la-dot-circle"></i>
+  <span>Top</span>
+</a>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         End Scroll-To-Top
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-
-
-        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         Start Blog
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-        <section class="blog-section ptb-50">
-            <div class="container">
-            <form id="contact_form" class="small" method="post" action="#">
-
-                <div class="search"> 
-                    <div class="row">
-                         @csrf
-                            <div class="col-md-3">
-                                <label class="form-label-outside">From</label>
-                                <!--Select 2-->
-                                <select name="tr_from" id="tr_from" class="form-input" tabindex="-1" aria-hidden="true">
-                                    <option value="">Select From</option>
-                                    @foreach ($airports as $airport)
-                                        @php
-                                            $selected = ( request()->get('d1') && $airport->code == request()->get('d1'))? 'selected' : '';
-                                        @endphp
-                                    <option {{ $selected }} value="{{ $airport->code }}">{{ $airport->name, $airport->city, $airport->country_code }}</option>
-                                    @endforeach
-                                </select>
-                                <span id="tr_from_error" class="error" style="color:red"></span>
-                            </div>
-                            <div class="col-md-3 ">
-                                <label class="form-label-outside">To</label>
-                                <!--Select 2-->
-                                <select name="tr_to" id="tr_to" class="form-input" tabindex="-1" aria-hidden="true">
-                                <option value="">Select To</option>
-                                    @foreach ($airports as $airport)
-                                        @php
-                                            $selected = ( request()->get('r1') && $airport->code == request()->get('r1'))? 'selected' : '';
-                                        @endphp
-                                        <option {{ $selected }} value="{{ $airport->code }}">{{ $airport->name, $airport->city, $airport->country_code }}</option>
-                                    @endforeach
-                                </select>
-                                <span id="tr_to_error" class="error" style="color:red"></span>
-                            </div>
-                            <div class="col-md-3">
-                                
-                                    <label class="form-label-outside">Flight Type</label>
-                                    <!--Select 2-->
-                                    <select name="flight_type" id="flight_type" class="form-input" tabindex="-1" aria-hidden="true" style="width: 100%;">
-                                        <option value="">Select </option>
-                                        <option  @if(request()->get('tripType') == 'ROUNDTRIP') selected  @endif value="ROUNDTRIP">Round Trip</option>
-                                        <option  @if(request()->get('tripType') == 'ONEWAYTRIP') selected  @endif value="ONEWAYTRIP">One Way</option>
-                                    </select>
-                                    <span id="flight_type_error" class="error" style="color:red"></span>
-                            </div>
-                            <div class="col-md-3"> 
-                                <button type="submit"  id="btn-submit" class="flight-search" ><i style="display:none" id="spin" class="fa fa-spinner" aria-hidden="true"></i>Search</button>     
-                            </div>
+<section class="blog-section ptb-50">
+  <div class="container">
+    
+      <div class="search">
+        <div class="row justify-content-center mb-30-none">
+           <div class="col-xl-8 col-lg-8 mb-30">
+                    <form id="contact_form" class="small" method="post" action="#">
+                      @csrf 
+                      <div class="row">
+                          <div class="col-md-4">
+                              <label class="form-label-outside">From</label>
+                              <!--Select 2-->
+                              <select name="tr_from" id="tr_from" class="form-input" tabindex="-1" aria-hidden="true">
+                              <option value="">Select From</option> @foreach ($airports as $airport) @php $selected = ( request()->get('d1') && $airport->code == request()->get('d1'))? 'selected' : ''; @endphp <option {{ $selected }} value="{{ $airport->code }}">{{ $airport->name, $airport->city, $airport->country_code }}</option> @endforeach
+                              </select>
+                              <span id="tr_from_error" class="error" style="color:red"></span>
+                          </div>
+                          <div class="col-md-4 ">
+                              <label class="form-label-outside">To</label>
+                              <!--Select 2-->
+                              <select name="tr_to" id="tr_to" class="form-input" tabindex="-1" aria-hidden="true">
+                              <option value="">Select To</option> @foreach ($airports as $airport) @php $selected = ( request()->get('r1') && $airport->code == request()->get('r1'))? 'selected' : ''; @endphp <option {{ $selected }} value="{{ $airport->code }}">{{ $airport->name, $airport->city, $airport->country_code }}</option> @endforeach
+                              </select>
+                              <span id="tr_to_error" class="error" style="color:red"></span>
+                          </div>
+                          <div class="col-md-2">
+                              <label class="form-label-outside">Flight Type</label>
+                              <!--Select 2-->
+                              <select name="flight_type" id="flight_type" class="form-input" tabindex="-1" aria-hidden="true" style="width: 100%;">
+                              <option value="">Select </option>
+                              <option @if(request()->get('tripType') == 'ROUNDTRIP') selected @endif value="ROUNDTRIP">Round Trip</option>
+                              <option @if(request()->get('tripType') == 'ONEWAYTRIP') selected @endif value="ONEWAYTRIP">One Way</option>
+                              </select>
+                              <span id="flight_type_error" class="error" style="color:red"></span>
+                          </div>
+                          <div class="col-md-2">
+                              <button type="submit" id="btn-submit" class="flight-search">
+                              <i style="display:none" id="spin" class="fa fa-spinner" aria-hidden="true"></i>Search </button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="col-xl-4 col-lg-4 mb-30">
+                        <label class="form-label-outside">Sort By</label>
+                        <!--Select 2-->
+                        <select name="sort_by" id="sort_by" class="form-input" tabindex="-1" aria-hidden="true">
+                          <option value="">Select From</option> 
+                          <option  value="1">Cheapest</option> 
+                        </select>
+                        <span id="tr_from_error" class="error" style="color:red"></span>
                     </div>
-                </div>
-            </form>
-                <div class="row justify-content-center mb-30-none">
-                    @if($flights)
-                    @foreach ($flights as $flight)
-                        <div class="col-xl-12 col-lg-12 mb-30">
-                            <div class="justify-content-center mb-30-none">
-                                <div class="flight-bg">
-                                    <div class="flight-price-bg">
-                                        <div class="row " >
+                
+            </div>
+        </div>
+    
 
-                                            <div class="col-md-8 flight-price-number full-line-price">
-                                                
-                                                <div>
-                                                    @if($tripType !='ONEWAYTRIP')
-                                                        <span class="partial-price"> {{ $flight->outbound_price? '$'.$flight->outbound_price : ''}} </span>
-                                                        <span class="text">+</span>
-                                                        <span class="partial-price"> {{ $flight->return_price? '$'.$flight->return_price : ''}} </span>
-                                                        <span class="text"> =</span>
-                                                    @endif
-                                                    <span class="total-price">
-                                                        ${{ $flight->outbound_price+$flight->return_price }}                  
-                                                    </span>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row dep-div">
-                                        <div class="col-12 col-sm-2 col-md-2 col-lg-2">
-                                            <img src="{{asset('assets/images/flight/').'/'.$flight->outbound_airlines_image}}" class="flogo" alt="">
-                                            
-                                        </div>
-                                        <div class="col-6 col-sm-2 col-md-2 col-lg-2 price">
-                                            <h5>{{ $flight->outbound_airlines_name }}</h5>
-                                            <span>Flight {{ $flight->outbound_flight_number }}</span>
-                                        </div>
-                                        <div class="col-6 col-sm-2 col-md-2 col-lg-2">
-                                            <?php 
-
-                                            $outbound_departure_time = Carbon::parse($flight->outbound_departure_time);
-                                            $arr = Carbon::parse($flight->outbound_departure_time);
-                                            $arrival_time = $arr->addMinute($flight->outbound_duration);
-
-                                            // Get Timezone - Departure
-                                            $outbound_departure_timezone = new DateTimeZone( $flight->outbound_departure_timezone );
-
-                                            // Set time
-                                            $arrival_time = new DateTime( $flight->outbound_departure_time, $outbound_departure_timezone );
-                                            $arrival_time->add(new DateInterval('PT' . $flight->outbound_duration . 'M'));
-
-
-                                            // Get Timezone - Arrival
-
-                                            $arrival_Timezone = new DateTimeZone( $flight->outbound_arrival_timezone );
-                                            $arrival_time->setTimeZone( $arrival_Timezone );        ?>
-                                            <h5 >{{ $outbound_departure_time->format('G:ia'); }}</h5>
-                                            <b>{{ $flight->outbound_airport_from }} ({{ $flight->outbound_departure }})</b>
-                                        </div>
-                                        <div class="col-6 col-sm-2 col-md-2 col-lg-2">
-                                            <span class="duration">{{ intdiv($flight->outbound_duration, 60).'H : '. ($flight->outbound_duration % 60).'M' }} </span>
-                                            <p>duration</p>
-                                        </div>
-                                        <div class="col-6 col-sm-2 col-md-2 col-lg-2">
-                                            <h5 >{{ $arrival_time->format('G:ia'); }}</h5>
-                                            <b>{{ $flight->outbound_airport_to }} ({{ $flight->outbound_arrival }})</b>
-                                        </div>
-                                        
-                                    </div>
-                                    @if($tripType!='ONEWAYTRIP')
-                                        <div class="flight-detail-bg">
-                                            <div class="row">
-                                                <div class="col-12 col-sm-2 col-md-2 col-lg-2">
-                                                    <img src="{{asset('assets/images/flight/').'/'.$flight->return_airlines_image}}" class="flogo" alt="">
-                                                    
-                                                </div>
-                                                <div class="col-6 col-sm-2 col-md-2 col-lg-2 price">
-                                                    <h5>{{ $flight->return_airlines_name }}</h5>
-                                                    <span>Flight {{ $flight->return_flight_number }}</span>
-                                                </div>
-                                                <div class="col-6 col-sm-2 col-md-2 col-lg-2">
-                                                    <?php 
-
-                                                    $return_departure_time = Carbon::parse($flight->return_departure_time);
-                                                    $arr = Carbon::parse($flight->return_departure_time);
-                                                    $arrival_time = $arr->addMinute($flight->return_duration);
-
-                                                    // Get Timezone - Departure
-                                                    $return_departure_timezone = new DateTimeZone( $flight->return_departure_timezone );
-
-                                                    // Set time
-                                                    $arrival_time = new DateTime( $flight->return_departure_time, $return_departure_timezone );
-                                                    $arrival_time->add(new DateInterval('PT' . $flight->return_duration . 'M'));
-
-
-                                                    // Get Timezone - Arrival
-
-                                                    $arrival_Timezone = new DateTimeZone( $flight->return_arrival_timezone );
-                                                    $arrival_time->setTimeZone( $arrival_Timezone );        ?>
-                                                    <h5 >{{ $return_departure_time->format('G:ia'); }}</h5>
-                                                    <b>{{ $flight->return_airport_from }} ({{ $flight->return_departure }})</b>
-                                                </div>
-                                                <div class="col-6 col-sm-2 col-md-2 col-lg-2">
-                                                    <span class="duration">{{ intdiv($flight->return_duration, 60).'H : '. ($flight->return_duration % 60).'M' }} </span>
-                                                    <p>duration</p>
-                                                </div>
-                                                <div class="col-6 col-sm-2 col-md-2 col-lg-2">
-                                                    <h5 >{{ $arrival_time->format('G:ia'); }}</h5>
-                                                    <b>{{ $flight->return_airport_to }} ({{ $flight->return_arrival }})</b>
-                                                </div>
-                                            
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
+    <div class="row mb-30-none"> 
+        <input type="hidden" name="d1" id="d1" value="{{ request()->get('d1') }}">
+        <input type="hidden" name="r1" id="r1" value="{{ request()->get('r1') }}">
+        <input type="hidden" name="tripType" id="tripType" value="{{ request()->get('tripType') }}">
+        <input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token() }}">
+        <div class="col-xl-4 col-lg-4 mb-30">
+          
+              <div class="row">
+                  @if($airlines)
+                    <div class="col-xl-12 col-lg-12 mb-30">
+                        <div class="filter-bg">
+                            <div class="flight-price-bg">
+                                <span class="f-head">Filter by Airline</span>
+                            </div>
+                            <div class="filters-section">
+                              <div class="row">
+                                @foreach ($airlines as $airline) 
+                                  <div class="col-md-12">
+                                    <input type="checkbox" @if( !empty($airlines_selected) && in_array($airline->code, $airlines_selected) ) checked @endif name="airline" id="airline_{{ $airline->code }}"  class="airln-ck middle3px arlne" value="{{ $airline->code }}"> 
+                                    <label for="{{ $airline->code }}" class="airln-lb">{{ $airline->name }}</label>
+                                  </div>
+                                @endforeach
+                              </div>
                             </div>
                         </div>
-                    @endforeach
-                    @endif
-                    
-                </div>
-                
-                <nav>
-                    {{ $flights->appends(request()->input())->links(); }}
-                    <!-- <ul class="pagination">
-                        <li class="page-item prev">
-                            <a class="page-link" href="#" rel="prev" aria-label="Prev &raquo;">PREV</a>
-                        </li>
-                        <li class="page-item active" aria-current="page"><span class="page-link">01</span></li>
-                        <li class="page-item"><a class="page-link" href="#">02</a></li>
-                        <li class="page-item"><a class="page-link" href="#">03</a></li>
-                        <li class="page-item"><a class="page-link" href="#">04</a></li>
-                        <li class="page-item"><a class="page-link" href="#">05</a></li>
-                        <li class="page-item next">
-                            <a class="page-link" href="#" rel="next" aria-label="Next &raquo;">NEXT</a>
-                        </li>
-                    </ul> -->
-                </nav>
-            </div>
-        </section>
-        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        End Blog
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                    </div>
+                  @endif
 
+                  <div class="col-xl-12 col-lg-12 mb-30">
+                      <div class="filter-bg">
+                          <div class="flight-price-bg">
+                              <span class="f-head">Filter by Cost</span>
+                          </div>
+                          <div class="filters-section">
+                            <div class="row">
+                                <div class="col-md-12 mb-10">
+                                  <input type="text" name="" id="" class="middle3px arlne" min="0" placeholder="Mininum amount"> 
+                                </div>
+                                <div class="col-md-12 mb-10">
+                                  <input type="text" name="" id="" class="middle3px arlne" min="0" placeholder="MAximum amount"> 
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+
+              </div>
+            
+        </div>
+        <div class="col-xl-8 col-lg-8 mb-30" id="f-div1">
+            <span style="display: none;" id="spin1"><i class="fa fa-2x fa-spin fa-spinner"></i></span>
+            @include('include.flight')
+        </div>    
+    </div>
+    
+  </div>
+</section>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Blog
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~--> 
 @endsection

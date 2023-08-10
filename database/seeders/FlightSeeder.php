@@ -45,7 +45,7 @@ class FlightSeeder extends Seeder
             "departure_time" => "09:30",
             "arrival_airport" => "YVR",
             "Duration" => 330,
-            "price" => "600.31"
+            "price" => "599.31"
         ]
         );
 
@@ -57,7 +57,7 @@ class FlightSeeder extends Seeder
             "departure_time" => "10:55",
             "arrival_airport" => "YUL",
             "Duration" => 277,
-            "price" => "499.93"
+            "price" => "799.93"
         ]
         );
 
@@ -69,7 +69,7 @@ class FlightSeeder extends Seeder
             "departure_time" => "10:55",
             "arrival_airport" => "YUL",
             "Duration" => 250,
-            "price" => "499.93"
+            "price" => "1499.93"
         ]
         );
     }

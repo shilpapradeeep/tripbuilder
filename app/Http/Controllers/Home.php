@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Airport;
 use App\Models\Flight;
+use App\Models\Airline;
 use Illuminate\Http\Request;
 use App\Http\Resources\Airport as AirportResource;
+use Illuminate\Support\Facades\DB;
 use URL;
 
 class Home extends Controller
@@ -21,9 +23,8 @@ class Home extends Controller
      */
     public function index()
     {
-        $data['airports'] = AirportResource::collection(
-            Airport::select('id','code','name','city','country_code')->where(['status'=>'1'])->get());
-        return view('home')->with($data);
+        $airports = $this->fetchAirport();
+        return view('home',compact('airports'));
     }
 
     public function submit(Request $req)
@@ -58,18 +59,73 @@ class Home extends Controller
         return response()->json($res);
     }
     
-    public function getFlights1(Request $request) { 
-        $airports = AirportResource::collection(
-            Airport::select('id','code','name','city','country_code')->where(['status'=>'1'])->get());
-        return view('flights_new',compact('airports'));
-    }
     public function getFlights(Request $request) { 
 
         $departureAirport = $request->get('d1');
         $arrivalAirport = $request->get('r1');
         $tripType = $request->get('tripType');
+        $flights = $this->flights($departureAirport,$arrivalAirport,$tripType); 
+        $airports = $this->fetchAirport();
+
+        $airlines = Airline::select('id','code','name')->where(['status'=>'1'])->get();
+
+        return view('flights',compact('flights','airports','tripType','airlines'));
+    }
+
+    public function filterFlights(Request $request)
+    {
+        
+
+        // echo "helloo";
+        $departureAirport = $request->get('d1'); // 'YUL'; // $request->get('d1');
+        $arrivalAirport = $request->get('r1'); //'YVR'; // $request->get('r1');
+        $tripType = $request->get('tripType'); //'ROUNDTRIP'; // $request->get('tripType');
+        $airlines = $request->get('airline_codes'); //['AC','QR']; // $request->get('airline_codes');
+        $filter_condtion = array('airlines' => $airlines);
+        $sort = $request->get('sort');
+        $flights = $this->flights($departureAirport,$arrivalAirport,$tripType,$filter_condtion,$sort);
+        $view = view('include.flight', [
+            'flights' => $flights,
+            'tripType' =>$tripType 
+        ])->render();
+
+        return response()->json(['res'=>'1','html'=>$view]);
+    }
+    public function filterPagination(Request $request)
+    {
+        
+
+        // echo "helloo";
+        $departureAirport = $request->get('d1'); // 'YUL'; // $request->get('d1');
+        $arrivalAirport = $request->get('r1'); //'YVR'; // $request->get('r1');
+        $tripType = $request->get('tripType'); //'ROUNDTRIP'; // $request->get('tripType');
+        $airlines_selected = $request->get('airline_codes'); //['AC','QR']; // $request->get('airline_codes');
+        $filter_condtion = array('airlines' => $airlines_selected);
+        $sort = $request->get('sort');
+
+        $airports = $this->fetchAirport();
+        $airlines = Airline::select('id','code','name')->where(['status'=>'1'])->get();
+
+        $flights = $this->flights($departureAirport,$arrivalAirport,$tripType,$filter_condtion,$sort);
+        $view = view('include.flight', [
+            'flights' => $flights,
+            'tripType' =>$tripType 
+        ])->render();
+        return view('flights',compact('flights','airports','tripType','airlines','airlines_selected'));
+
+    }
+
+    private function fetchAirport()
+    {
+
+        $airports = Airport::select('id','code','name','city','country_code','city_code')->where(['status'=>'1'])->get();
+        return $airports;
+    }
+    
+    public function flights($departureAirport,$arrivalAirport,$tripType,$filter_condtion=NULL,$sort=NULL){
+
         if($tripType == 'ONEWAYTRIP') {
-            $flights = Flight::select(
+            $flights_query = Flight::select(
                 'outbound.id as outbound_id', 'outbound.number as outbound_flight_number','outbound.price as outbound_price',
                 'outbound.departure_airport as outbound_departure', 'outbound.arrival_airport as outbound_arrival',
                 'outbound.departure_time as outbound_departure_time','outbound.duration as outbound_duration',
@@ -81,11 +137,22 @@ class Home extends Controller
             ->join('airlines as outbound_airline', 'outbound_airline.code', '=', 'outbound.airline')
             ->join('airports as outbound_dep', 'outbound_dep.code', '=', 'outbound.departure_airport')
             ->join('airports as outbound_arrv', 'outbound_arrv.code', '=', 'outbound.arrival_airport')
-            ->where(['outbound.departure_airport'=>$request->get('d1'), 'outbound.arrival_airport'=>$request->get('r1')])
-            ->paginate(2);
+            ->where(['outbound.departure_airport'=>$departureAirport, 'outbound.arrival_airport'=>$arrivalAirport]);
+            if(!empty($filter_condtion['airlines'])) {
+                $flights = $flights_query->whereIn('outbound.airline',$filter_condtion['airlines']);
+                //echo $flights_query->toSql(); exit;
+            }
+            if(!empty($sort))
+            {
+                if($sort == 1)
+                {
+                    $flights_query->orderBy('outbound.price','ASC');
+                } 
+            }
+            $flights = $flights_query->paginate(3);
         }  
         else {
-            $flights = Flight::select(
+            $flights_query = Flight::select(
                 'outbound.id as outbound_id', 'outbound.number as outbound_flight_number','outbound.price as outbound_price',
                 'outbound.departure_airport as outbound_departure', 'outbound.arrival_airport as outbound_arrival',
                 'outbound.departure_time as outbound_departure_time','outbound.duration as outbound_duration',
@@ -112,14 +179,24 @@ class Home extends Controller
             ->join('airports as outbound_arrv', 'outbound_arrv.code', '=', 'outbound.arrival_airport')
             ->join('airlines as return_airline', 'return_airline.code', '=', 'return.airline')
             ->join('airports as return_dep', 'return_dep.code', '=', 'return.departure_airport')
-            ->join('airports as return_arrv', 'return_arrv.code', '=', 'return.arrival_airport')
-            ->paginate(2);
-        }               
-        
+            ->join('airports as return_arrv', 'return_arrv.code', '=', 'return.arrival_airport');
+            
+            if(!empty($sort))
+            {
+                if($sort == 1)
+                {
+                    $flights_query->orderByRaw('(outbound.price + return.price) asc');
+                } 
+            }
+            
 
-        $airports = AirportResource::collection(
-            Airport::select('id','code','name','city','country_code')->where(['status'=>'1'])->get());
-
-        return view('flights',compact('flights','airports','tripType'));
+            if(!empty($filter_condtion['airlines'])) {
+                $flights = $flights_query
+                ->whereIn('outbound.airline',$filter_condtion['airlines'])
+                ->orwhereIn('return.airline',$filter_condtion['airlines']);
+            }
+            $flights = $flights_query->paginate(3);;
+        }
+        return $flights;
     }
 }

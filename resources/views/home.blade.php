@@ -53,7 +53,7 @@
                                                         <select name="tr_from" id="tr_from" class="form-input select2" tabindex="-1" aria-hidden="true">
                                                             <option value="">Select From</option>
                                                             @foreach ($airports as $airport)
-                                                            <option value="{{ $airport->code }}"><?=$airport->name.', '.$airport->city.' ('.$airport->code. ')'?></option>
+                                                            <option value="{{ $airport->code }}"><?=$airport->name.' ('.$airport->code. ')'.', '.$airport->city.' ('.$airport->city_code. ')'?></option>
                                                             @endforeach
                                                         </select>
                                                         <span id="tr_from_error" class="error" style="color:red"></span>
@@ -66,7 +66,7 @@
                                                         <select name="tr_to" id="tr_to" class="form-input select2" tabindex="-1" aria-hidden="true">
                                                         <option value="">Select To</option>
                                                             @foreach ($airports as $airport)
-                                                            <option value="{{ $airport->code }}"><?=$airport->name.', '.$airport->city.' ('.$airport->code. ')'?></option>
+                                                            <option value="{{ $airport->code }}"><?=$airport->name.' ('.$airport->code. ')'.', '.$airport->city.' ('.$airport->city_code. ')'?></option>
                                                             @endforeach
                                                         </select>
                                                         <span id="tr_to_error" class="error" style="color:red"></span>
