@@ -20,11 +20,11 @@ update DATABASE CONSTANTS with the database info you created.
 
 Then run the following Commands:
 
-$ git clone https://github.com/shilpapradeeep/tripbuilder.git
-$ cd tripbuilder
-$ composer install
-$ php artisan migrate
-$ php artisan db:seed
+$ git clone https://github.com/shilpapradeeep/tripbuilder.git  
+$ cd tripbuilder  
+$ composer install  
+$ php artisan migrate  
+$ php artisan db:seed  
 $ php artisan serve
 
 This will populate the database with the testing data. 
