@@ -50,10 +50,10 @@
                                                         <div class="form-wrap">
                                                         <label class="form-label-outside">From</label>
                                                         <!--Select 2-->
-                                                        <select name="tr_from" id="tr_from" class="form-input" tabindex="-1" aria-hidden="true">
+                                                        <select name="tr_from" id="tr_from" class="form-input select2" tabindex="-1" aria-hidden="true">
                                                             <option value="">Select From</option>
                                                             @foreach ($airports as $airport)
-                                                            <option value="{{ $airport->code }}">{{ $airport->name, $airport->city, $airport->country_code }}</option>
+                                                            <option value="{{ $airport->code }}"><?=$airport->name.', '.$airport->city.' ('.$airport->code. ')'?></option>
                                                             @endforeach
                                                         </select>
                                                         <span id="tr_from_error" class="error" style="color:red"></span>
@@ -63,10 +63,10 @@
                                                         <div class="form-wrap">
                                                         <label class="form-label-outside">To</label>
                                                         <!--Select 2-->
-                                                        <select name="tr_to" id="tr_to" class="form-input" tabindex="-1" aria-hidden="true">
+                                                        <select name="tr_to" id="tr_to" class="form-input select2" tabindex="-1" aria-hidden="true">
                                                         <option value="">Select To</option>
                                                             @foreach ($airports as $airport)
-                                                            <option value="{{ $airport->code }}">{{ $airport->name, $airport->city, $airport->country_code }}</option>
+                                                            <option value="{{ $airport->code }}"><?=$airport->name.', '.$airport->city.' ('.$airport->code. ')'?></option>
                                                             @endforeach
                                                         </select>
                                                         <span id="tr_to_error" class="error" style="color:red"></span>
@@ -76,7 +76,7 @@
                                                         <div class="row row-20 row-md-23 align-items-md-end">
                                                         
                                                         <div class="col-12 col-xl-clear-flex align-items-md-end text-center text-xl-end">
-                                                            <button type="submit"  id="btn-submit" class="button button-primary button-sm button-naira button-naira-up" fdprocessedid="7bu7lc"><i style="display:none" id="spin" class="fa fa-spinner" aria-hidden="true"></i><span>Search Flight</span></button>
+                                                            <button type="submit"  id="btn-submit" class="button button-primary button-sm " fdprocessedid="7bu7lc"><i style="display:none" id="spin" class="fa fa-spinner" aria-hidden="true"></i><span>Search Flight</span></button>
                                                         </div>
                                                         </div>
                                                     </div>

@@ -1,3 +1,10 @@
+
+  $(document).ready(function()
+  {
+    $('.select2').select2({
+        minimumResultsForSearch: ''
+      });
+  });
 jQuery("#contact_form").submit(function(e){
     e.preventDefault();
     $('#spin').show();

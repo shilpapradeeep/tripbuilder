@@ -18,12 +18,10 @@
     <link rel="shortcut icon" href="{{ asset('assets/images/fav.png')}}" type="image/x-icon">
     <!-- line-awesome-icon css -->
     <link rel="stylesheet" href="{{ asset('assets/css/icomoon.css')}}">
-    <!-- line-awesome-icon css -->
-    <link rel="stylesheet" href="{{ asset('assets/css/line-awesome.min.css')}}">
-    <!-- nice select css -->
-    <link rel="stylesheet" href="{{ asset('assets/css/nice-select.css')}}">
     <!-- main style css link -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
+    <link href="{{ asset('assets/lib/select2/select2.min.css') }}" rel="stylesheet">
+
    
 </head>
 
@@ -127,6 +125,7 @@
             </div>
         </footer>
         <script  src="{{asset('assets/js/jquery.js')}}"></script><!-- CUSTOM FUCTIONS  -->
+        <script src="{{ asset('assets/lib/select2/select2.full.min.js') }}"></script>
         <script  src="{{asset('assets/js/custom.js')}}"></script><!-- CUSTOM FUCTIONS  -->
         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         End Footer

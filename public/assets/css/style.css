@@ -1919,55 +1919,12 @@ option {
   transform: scale(1);
 }
 
-.select2-container {
-  -ms-flex: 0 0 100%;
-  flex: 0 0 100%;
-  width: 100%;
-}
+
 
 .selection {
   width: 100%;
 }
 
-.select2-selection--single {
-  width: 100%;
-  height: 45px !important;
-  outline: none;
-  background: transparent !important;
-  font-size: 15px;
-  box-shadow: none;
-  padding: 10px 10px;
-  border-radius: 5px;
-  vertical-align: top;
-  display: inline-block;
-  border: 1px solid #e5e5e5 !important;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.select2-selection--single span {
-  margin: 0;
-  width: 100%;
-  color: #3d3d3d;
-  line-height: initial;
-  font-weight: 600;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-  height: auto;
-  position: absolute;
-  top: 22px;
-  right: 7px;
-  width: 20px;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__arrow b {
-  border-color: #3d3d3d transparent transparent transparent;
-}
-
-.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
-  border-color: transparent transparent #3d3d3d transparent;
-}
 
 .submit-btn {
   padding: 12px 20px;
