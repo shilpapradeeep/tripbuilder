@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('assets/css/style1.css')}}">
  <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         Start Overview
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
     
-    <div class="overview-section" style="background-image:url({{ asset('assets/images/bg/bg-photo.jpg')}})" >
+    <div class="overview-section" style="background-image:url({{ asset('assets/images/bg/bg-photo.jpg')}} )" >
             <div class="container-fluid">
                 <div class="overview-area">
                     <div class="overview-tab">
@@ -37,10 +38,10 @@
                                                     <div class="col-lg-8">
                                                         <div class="form-wrap radio-inline-wrapper">
                                                         <label class="radio-inline">
-                                                            <input name="flight_type" value="radio-1" type="radio" checked="" class="radio-custom"><span class="radio-custom-dummy"></span>Round Trip
+                                                            <input name="flight_type" value="ROUNDTRIP" type="radio" checked="" class="radio-custom"><span class="radio-custom-dummy"></span>Round Trip
                                                         </label>
                                                         <label class="radio-inline">
-                                                            <input name="flight_type" value="radio-2" type="radio" class="radio-custom"><span class="radio-custom-dummy"></span>One Way
+                                                            <input name="flight_type" value="ONEWAYTRIP" type="radio" class="radio-custom"><span class="radio-custom-dummy"></span>One Way
                                                         </label>
                                                         </div>
                                                         <span id="flight_type_error" class="error" style="color:red"></span>
@@ -75,7 +76,7 @@
                                                         <div class="row row-20 row-md-23 align-items-md-end">
                                                         
                                                         <div class="col-12 col-xl-clear-flex align-items-md-end text-center text-xl-end">
-                                                            <button type="submit"  id="btn-submit" class="button button-primary button-sm button-naira button-naira-up" fdprocessedid="7bu7lc"><span class="icon fa-search"></span><span>Search Flight</span></button>
+                                                            <button type="submit"  id="btn-submit" class="button button-primary button-sm button-naira button-naira-up" fdprocessedid="7bu7lc"><i style="display:none" id="spin" class="fa fa-spinner" aria-hidden="true"></i><span>Search Flight</span></button>
                                                         </div>
                                                         </div>
                                                     </div>

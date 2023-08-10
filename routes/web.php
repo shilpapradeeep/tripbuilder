@@ -15,14 +15,11 @@ use App\Http\Controllers\Home;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Auth::routes();
 
-Route::get('/', [Home::class, 'index']);
-Route::get('/call-api', [Home::class, 'api']);
+Route::get('/', [Home::class, 'index'])->name('home');
+Route::get('flights/', [Home::class, 'getFlights'])->name('flights');
+Route::get('flights-new/', [Home::class, 'getFlights1'])->name('flights');
 Route::post('submit-flight/', [Home::class, 'submit']);
 
 

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Airport;
+use App\Models\Flight;
 use Illuminate\Http\Request;
 use App\Http\Resources\Airport as AirportResource;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Route;
+use URL;
 
 class Home extends Controller
 {
@@ -41,56 +41,85 @@ class Home extends Controller
         
         if ($validation)
         {
-            echo "insideee";
-        	// $response = Http::get('http://127.0.0.1:8000/api/v1/flights');
-            // echo "<pre>"; print_r($response);
-            // exit;
-
             
-            // $url ="http://127.0.0.1:8000/api/v1/status";
-            // $ch=curl_init();
-            // curl_setopt($ch, CURLOPT_URL, $url);
-            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            // curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
-            // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-            // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-            // $curl_response = curl_exec($ch);
+            $data = array('tr_from'=>$req->post('tr_from'),'tr_to'=>$req->post('tr_to'),'flight_type'=>$req->post('flight_type'));
+            $from = $req->post('tr_from');
+            $to   = $req->post('tr_to');
+            $type = $req->post('flight_type');
+            $redirect = URL::to('/flights?&d1='.$from.'&r1='.$to.'&tripType='.$type);
 
-            // $request = Request::create('/api/v1/status', 'GET');
-            // $instance = json_decode(Route::dispatch($request)->getContent());
-            $request = Request::create('/api/v1/status', 'GET');
-
-            $response = Route::dispatch($request);
-
-            //$result = json_decode($curl_response,true);
-
+            $res = ['res'=>'1','msg'=>'success','redirect'=>$redirect ];
 
         }
         else{
-            $res = ['res'=>'0','msg'=>'Sorry something went wrong!','errors'=>$validation->errors()->all()];
+            $res = ['res'=>'0','msg'=>'Sorry something went wrong!','errors'=> $validation->errors()->all()];
         }
 
         return response()->json($res);
     }
+    
+    public function getFlights1(Request $request) { 
+        $airports = AirportResource::collection(
+            Airport::select('id','code','name','city','country_code')->where(['status'=>'1'])->get());
+        return view('flights_new',compact('airports'));
+    }
+    public function getFlights(Request $request) { 
 
-    public function api(){ 
-        // $request = Request::create('/api/v1/flights', 'GET');
-        // $response = Route::dispatch($request);
+        $departureAirport = $request->get('d1');
+        $arrivalAirport = $request->get('r1');
+        $tripType = $request->get('tripType');
+        if($tripType == 'ONEWAYTRIP') {
+            $flights = Flight::select(
+                'outbound.id as outbound_id', 'outbound.number as outbound_flight_number','outbound.price as outbound_price',
+                'outbound.departure_airport as outbound_departure', 'outbound.arrival_airport as outbound_arrival',
+                'outbound.departure_time as outbound_departure_time','outbound.duration as outbound_duration',
+                'outbound_airline.name as outbound_airlines_name','outbound_airline.image as outbound_airlines_image',
+                'outbound_dep.name as outbound_airport_departure','outbound_dep.timezone as outbound_departure_timezone','outbound_dep.city as outbound_airport_from',
+                'outbound_arrv.name as outbound_airport_arrival','outbound_arrv.timezone as outbound_arrival_timezone','outbound_arrv.city as outbound_airport_to'
+            )
+            ->from('flights as outbound')
+            ->join('airlines as outbound_airline', 'outbound_airline.code', '=', 'outbound.airline')
+            ->join('airports as outbound_dep', 'outbound_dep.code', '=', 'outbound.departure_airport')
+            ->join('airports as outbound_arrv', 'outbound_arrv.code', '=', 'outbound.arrival_airport')
+            ->where(['outbound.departure_airport'=>$request->get('d1'), 'outbound.arrival_airport'=>$request->get('r1')])
+            ->paginate(2);
+        }  
+        else {
+            $flights = Flight::select(
+                'outbound.id as outbound_id', 'outbound.number as outbound_flight_number','outbound.price as outbound_price',
+                'outbound.departure_airport as outbound_departure', 'outbound.arrival_airport as outbound_arrival',
+                'outbound.departure_time as outbound_departure_time','outbound.duration as outbound_duration',
+                'outbound_airline.name as outbound_airlines_name','outbound_airline.image as outbound_airlines_image',
+                'outbound_dep.name as outbound_airport_departure','outbound_dep.timezone as outbound_departure_timezone','outbound_dep.city as outbound_airport_from',
+                'outbound_arrv.name as outbound_airport_arrival','outbound_arrv.timezone as outbound_arrival_timezone','outbound_arrv.city as outbound_airport_to',
+                'return.id as return_id', 'return.number as return_flight_number','return.price as return_price',
+                'return.departure_airport as return_departure', 'return.arrival_airport as return_arrival',
+                'return.departure_time as return_departure_time','return.duration as return_duration',
+                'return_airline.name as return_airlines_name','return_airline.image as return_airlines_image',
+                'return_dep.name as return_airport_departure','return_dep.timezone as return_departure_timezone','return_dep.city as return_airport_from',
+                'return_arrv.name as return_airport_arrival','return_arrv.timezone as return_arrival_timezone','return_arrv.city as return_airport_to',
+                
+            )
+            ->from('flights as outbound')
+            ->join('flights as return', function ($join) use ($departureAirport, $arrivalAirport) {
+                $join->on('outbound.arrival_airport', '=', 'return.departure_airport')
+                        ->where('outbound.departure_airport', '=', $departureAirport)
+                        ->where('return.arrival_airport', '=', $departureAirport)
+                        ->where('return.departure_airport', '=', $arrivalAirport);
+            })
+            ->join('airlines as outbound_airline', 'outbound_airline.code', '=', 'outbound.airline')
+            ->join('airports as outbound_dep', 'outbound_dep.code', '=', 'outbound.departure_airport')
+            ->join('airports as outbound_arrv', 'outbound_arrv.code', '=', 'outbound.arrival_airport')
+            ->join('airlines as return_airline', 'return_airline.code', '=', 'return.airline')
+            ->join('airports as return_dep', 'return_dep.code', '=', 'return.departure_airport')
+            ->join('airports as return_arrv', 'return_arrv.code', '=', 'return.arrival_airport')
+            ->paginate(2);
+        }               
+        
 
-        // $response = Http::timeout(50)->get('http://127.0.0.1:8000/api/v1/status');
+        $airports = AirportResource::collection(
+            Airport::select('id','code','name','city','country_code')->where(['status'=>'1'])->get());
 
-        $url ="http://127.0.0.1:8000/api/v1/status";
-        $ch=curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-        $curl_response = curl_exec($ch);
-
-        $request = Request::create('/api/v1/status', 'GET');
-        $response = json_decode(Route::dispatch($request)->getContent());
-
+        return view('flights',compact('flights','airports','tripType'));
     }
 }

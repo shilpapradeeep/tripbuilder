@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call([
-            AirportSeeder::class
+            AirportSeeder::class,
+            AirlineSeeder::class,
+            FlightSeeder::class
         ]);
     }
 }

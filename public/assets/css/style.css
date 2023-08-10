@@ -1191,7 +1191,6 @@ h1, h2, h3, h4, h5, h6 {
   color: #19232d;
   font-weight: 600;
   -webkit-font-smoothing: antialiased;
-  font-family: "Playfair Display", sans-serif;
 }
 
 h1 {
@@ -4173,8 +4172,8 @@ section {
 }
 
 .inner-banner-section {
-  padding-top: 208px;
-  padding-bottom: 113px;
+  padding-top: 75px;
+  padding-bottom: 110px;
 }
 .inner-banner-section .banner-content .title {
   margin-top: -20px;

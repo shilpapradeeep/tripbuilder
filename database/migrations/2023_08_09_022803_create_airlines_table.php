@@ -11,20 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('airports', function (Blueprint $table) {
+        Schema::create('airlines', function (Blueprint $table) {
             $table->id('id');
             $table->string('code');
-            $table->string('city_code');
             $table->string('name');
-            $table->string('city');
-            $table->string('country_code');
-            $table->float('latitude');
-            $table->float('longitude');
-            $table->string('timezone');
+            $table->string('image')->default(NULL);
             $table->enum('status',['1','2'])->default('1');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
-
         });
     }
 
@@ -33,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('airports');
+        Schema::dropIfExists('airlines');
     }
 };

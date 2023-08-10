@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/nice-select.css')}}">
     <!-- main style css link -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
-    <link rel="stylesheet" href="{{ asset('assets/css/style1.css')}}">
+   
 </head>
 
 <body>
@@ -44,8 +44,10 @@
                                 <!-- <a class="site-logo site-title" href="index-2.html"><img src="assets/images/logo.png"
                                         alt="site-logo"></a> -->
                                         <div class="navbar-header white">
-                                                    <span class="sub-title text-white"><span style="color:white">Trip</span><span> Builder</span>
-                                                </div>
+                                            <a href="{{route('home')}}">
+                                                <span class="sub-title text-white"><span style="color:white">Trip</span><span> Builder</span>
+                                            </a>    
+                                            </div>
                                 <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
                                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                                     aria-expanded="false" aria-label="Toggle navigation">
