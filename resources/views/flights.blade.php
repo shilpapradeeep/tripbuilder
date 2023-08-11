@@ -258,7 +258,13 @@
                               <label class="form-label-outside">From</label>
                               <!--Select 2-->
                               <select name="tr_from" id="tr_from" class="form-input" tabindex="-1" aria-hidden="true">
-                              <option value="">Select From</option> @foreach ($airports as $airport) @php $selected = ( request()->get('d1') && $airport->code == request()->get('d1'))? 'selected' : ''; @endphp <option {{ $selected }} value="{{ $airport->code }}">{{ $airport->name, $airport->city, $airport->country_code }}</option> @endforeach
+                              <option value="">Select From</option>
+                              @if(!$airports->isEmpty())
+                               @foreach ($airports as $airport)
+                                @php $selected = ( request()->get('d1') && $airport->code == request()->get('d1'))? 'selected' : ''; @endphp 
+                                <option {{ $selected }} value="{{ $airport->code }}">{{ $airport->name, $airport->city, $airport->country_code }}</option> 
+                               @endforeach
+                              @endif
                               </select>
                               <span id="tr_from_error" class="error" style="color:red"></span>
                           </div>
@@ -266,7 +272,13 @@
                               <label class="form-label-outside">To</label>
                               <!--Select 2-->
                               <select name="tr_to" id="tr_to" class="form-input" tabindex="-1" aria-hidden="true">
-                              <option value="">Select To</option> @foreach ($airports as $airport) @php $selected = ( request()->get('r1') && $airport->code == request()->get('r1'))? 'selected' : ''; @endphp <option {{ $selected }} value="{{ $airport->code }}">{{ $airport->name, $airport->city, $airport->country_code }}</option> @endforeach
+                              <option value="">Select To</option>
+                              @if(!$airports->isEmpty()) 
+                              @foreach ($airports as $airport)
+                               @php $selected = ( request()->get('r1') && $airport->code == request()->get('r1'))? 'selected' : ''; @endphp
+                                <option {{ $selected }} value="{{ $airport->code }}">{{ $airport->name, $airport->city, $airport->country_code }}</option> 
+                              @endforeach
+                              @endif
                               </select>
                               <span id="tr_to_error" class="error" style="color:red"></span>
                           </div>
@@ -293,6 +305,7 @@
                         <select name="sort_by" id="sort_by" class="form-input" tabindex="-1" aria-hidden="true">
                           <option value="">Select From</option> 
                           <option  value="1">Cheapest</option> 
+                          <option  value="2">Duration</option>
                         </select>
                         <span id="tr_from_error" class="error" style="color:red"></span>
                     </div>
@@ -309,7 +322,7 @@
         <div class="col-xl-4 col-lg-4 mb-30">
           
               <div class="row">
-                  @if($airlines)
+                  @if(!$airlines->isEmpty()) 
                     <div class="col-xl-12 col-lg-12 mb-30">
                         <div class="filter-bg">
                             <div class="flight-price-bg">

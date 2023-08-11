@@ -2,7 +2,7 @@
 <?php
 use Carbon\Carbon;
 ?>
-@if($flights) 
+@if( !$flights->isEmpty() ) 
     @foreach ($flights as $flight) 
         <div class="col-xl-12 col-lg-12 mb-50">
             <div class="justify-content-center mb-30-none">
@@ -112,8 +112,8 @@ use Carbon\Carbon;
         </div>
     </div>
 @else
-<div class="col-xl-12 col-lg-12 mb-30">
-    <p>No data available</p>
+<div class="col-xl-12 col-lg-12 mb-30 mt-30">
+    <p style="text-align:center">No data available</p>
 </div>
 @endif 
 

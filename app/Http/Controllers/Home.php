@@ -8,6 +8,7 @@ use App\Models\Airline;
 use Illuminate\Http\Request;
 use App\Http\Resources\Airport as AirportResource;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use URL;
 
 class Home extends Controller
@@ -59,15 +60,15 @@ class Home extends Controller
         return response()->json($res);
     }
     
-    public function getFlights(Request $request) { 
+    public function searchFlights(Request $request) { 
 
         $departureAirport = $request->get('d1');
         $arrivalAirport = $request->get('r1');
         $tripType = $request->get('tripType');
-        $flights = $this->flights($departureAirport,$arrivalAirport,$tripType); 
+        $flights = $this->actionFlightSearch($departureAirport,$arrivalAirport,$tripType); 
         $airports = $this->fetchAirport();
 
-        $airlines = Airline::select('id','code','name')->where(['status'=>'1'])->get();
+        $airlines = $this->fetchAirline();
 
         return view('flights',compact('flights','airports','tripType','airlines'));
     }
@@ -83,7 +84,7 @@ class Home extends Controller
         $airlines = $request->get('airline_codes'); //['AC','QR']; // $request->get('airline_codes');
         $filter_condtion = array('airlines' => $airlines);
         $sort = $request->get('sort');
-        $flights = $this->flights($departureAirport,$arrivalAirport,$tripType,$filter_condtion,$sort);
+        $flights = $this->actionFlightSearch($departureAirport,$arrivalAirport,$tripType,$filter_condtion,$sort);
         $view = view('include.flight', [
             'flights' => $flights,
             'tripType' =>$tripType 
@@ -102,11 +103,12 @@ class Home extends Controller
         $airlines_selected = $request->get('airline_codes'); //['AC','QR']; // $request->get('airline_codes');
         $filter_condtion = array('airlines' => $airlines_selected);
         $sort = $request->get('sort');
+        $page = $request->get('page');
 
         $airports = $this->fetchAirport();
-        $airlines = Airline::select('id','code','name')->where(['status'=>'1'])->get();
+        $airlines = $this->fetchAirline();
 
-        $flights = $this->flights($departureAirport,$arrivalAirport,$tripType,$filter_condtion,$sort);
+        $flights = $this->actionFlightSearch($departureAirport,$arrivalAirport,$tripType,$filter_condtion,$sort,$page);
         $view = view('include.flight', [
             'flights' => $flights,
             'tripType' =>$tripType 
@@ -121,8 +123,21 @@ class Home extends Controller
         $airports = Airport::select('id','code','name','city','country_code','city_code')->where(['status'=>'1'])->get();
         return $airports;
     }
+
+    private function fetchAirline()
+    {
+
+        $airlines = Airline::select('id','code','name')->where(['status'=>'1'])->get();
+        return $airlines;
+    }
     
-    public function flights($departureAirport,$arrivalAirport,$tripType,$filter_condtion=NULL,$sort=NULL){
+    public function actionFlightSearch($departureAirport,$arrivalAirport,$tripType,$filter_condtion=NULL,$sort=NULL,$page=NULL){
+
+        $cacheKey = "flights:$departureAirport-$arrivalAirport-$tripType-$sort-$page";
+        // Check if the flight search result is cached
+        if (Cache::has($cacheKey) && empty($filter_condtion)) {
+            return Cache::get($cacheKey);
+        }
 
         if($tripType == 'ONEWAYTRIP') {
             $flights_query = Flight::select(
@@ -148,8 +163,12 @@ class Home extends Controller
                 {
                     $flights_query->orderBy('outbound.price','ASC');
                 } 
+                elseif($sort == 2)
+                {
+                    $flights_query->orderBy('outbound.duration','ASC');
+                } 
             }
-            $flights = $flights_query->paginate(3);
+            $flights = $flights_query->paginate(2);
         }  
         else {
             $flights_query = Flight::select(
@@ -186,7 +205,11 @@ class Home extends Controller
                 if($sort == 1)
                 {
                     $flights_query->orderByRaw('(outbound.price + return.price) asc');
-                } 
+                }
+                elseif($sort == 2)
+                {
+                    $flights_query->orderByRaw('(outbound.duration + return.duration) asc');
+                }  
             }
             
 
@@ -197,6 +220,9 @@ class Home extends Controller
             }
             $flights = $flights_query->paginate(3);;
         }
+        // Cache the search results for a specific duration (e.g., 1 hour)
+        Cache::put($cacheKey, $flights, now()->addHours(1));
+
         return $flights;
     }
 }
