@@ -4,6 +4,7 @@ use Carbon\Carbon;
 ?>
 @if( !$flights->isEmpty() ) 
     @foreach ($flights as $flight) 
+       
         <div class="col-xl-12 col-lg-12 mb-50">
             <div class="justify-content-center mb-30-none">
                 <div class="flight-bg">
@@ -51,7 +52,7 @@ use Carbon\Carbon;
                             </div>
                             <div class="col-6 col-sm-2 col-md-2 col-lg-2">
                                 <span class="duration">{{ intdiv($flight->outbound_duration, 60).'H : '. ($flight->outbound_duration % 60).'M' }} </span>
-                                <p>duration</p>
+                                <p>{{ number_format((float)$flight->outbound_distance, 2, '.', '')."Km" }}</p>
                             </div>
                             <div class="col-6 col-sm-2 col-md-2 col-lg-2">
                                 <h5>{{ $arrival_time->format('G:ia'); }}</h5>
@@ -92,7 +93,7 @@ use Carbon\Carbon;
                                 </div>
                                 <div class="col-6 col-sm-2 col-md-2 col-lg-2">
                                 <span class="duration">{{ intdiv($flight->return_duration, 60).'H : '. ($flight->return_duration % 60).'M' }} </span>
-                                <p>duration</p>
+                                <p>{{ number_format((float)$flight->outbound_distance, 2, '.', '')."Km" }}</p>
                                 </div>
                                 <div class="col-6 col-sm-2 col-md-2 col-lg-2">
                                 <h5>{{ $arrival_time->format('G:ia'); }}</h5>
@@ -115,6 +116,4 @@ use Carbon\Carbon;
 <div class="col-xl-12 col-lg-12 mb-30 mt-30">
     <p style="text-align:center">No data available</p>
 </div>
-@endif 
-
-
+@endif

@@ -76,7 +76,26 @@ class Home extends Controller
     public function filterFlights(Request $request)
     {
         
+        if( !empty($request->get('type')) && $request->get('type') == 'cost_search')
+        {
+            $validation = $request->validate([
+                'min_cost'=>'required|max:55',
+                'max_cost'=>'required|max:255',
+            ],
+            [
+                'min_cost.required' => 'Please enter minimum cost.',
+                'max_cost.required' => 'Please enter a maximum cost.',
+            ]); 
 
+            if (!$validation)
+            {
+                
+                $res = ['res'=>'0','msg'=>'Sorry something went wrong!','errors'=> $validation->errors()->all()];
+                return response()->json($res);
+            }
+
+            
+        }
         // echo "helloo";
         $departureAirport = $request->get('d1'); // 'YUL'; // $request->get('d1');
         $arrivalAirport = $request->get('r1'); //'YVR'; // $request->get('r1');
@@ -145,8 +164,17 @@ class Home extends Controller
                 'outbound.departure_airport as outbound_departure', 'outbound.arrival_airport as outbound_arrival',
                 'outbound.departure_time as outbound_departure_time','outbound.duration as outbound_duration',
                 'outbound_airline.name as outbound_airlines_name','outbound_airline.image as outbound_airlines_image',
-                'outbound_dep.name as outbound_airport_departure','outbound_dep.timezone as outbound_departure_timezone','outbound_dep.city as outbound_airport_from',
-                'outbound_arrv.name as outbound_airport_arrival','outbound_arrv.timezone as outbound_arrival_timezone','outbound_arrv.city as outbound_airport_to'
+                'outbound_dep.name as outbound_airport_departure','outbound_dep.timezone as outbound_departure_timezone','outbound_dep.city as outbound_airport_from','outbound_dep.latitude as outbound_departure_latitude','outbound_dep.longitude as outbound_departure_longitude',
+                'outbound_arrv.name as outbound_airport_arrival','outbound_arrv.timezone as outbound_arrival_timezone','outbound_arrv.city as outbound_airport_to','outbound_arrv.latitude as outbound_arrival_latitude','outbound_arrv.longitude as outbound_arrival_longitude',
+                DB::raw('
+                    (
+                        6371 * acos(
+                            cos(radians(outbound_dep.latitude)) * cos(radians(outbound_arrv.latitude)) *
+                            cos(radians(outbound_arrv.longitude) - radians(outbound_dep.longitude)) +
+                            sin(radians(outbound_dep.latitude)) * sin(radians(outbound_arrv.latitude))
+                        )
+                    ) AS outbound_distance
+                ')
             )
             ->from('flights as outbound')
             ->join('airlines as outbound_airline', 'outbound_airline.code', '=', 'outbound.airline')
@@ -176,8 +204,8 @@ class Home extends Controller
                 'outbound.departure_airport as outbound_departure', 'outbound.arrival_airport as outbound_arrival',
                 'outbound.departure_time as outbound_departure_time','outbound.duration as outbound_duration',
                 'outbound_airline.name as outbound_airlines_name','outbound_airline.image as outbound_airlines_image',
-                'outbound_dep.name as outbound_airport_departure','outbound_dep.timezone as outbound_departure_timezone','outbound_dep.city as outbound_airport_from',
-                'outbound_arrv.name as outbound_airport_arrival','outbound_arrv.timezone as outbound_arrival_timezone','outbound_arrv.city as outbound_airport_to',
+                'outbound_dep.name as outbound_airport_departure','outbound_dep.timezone as outbound_departure_timezone','outbound_dep.city as outbound_airport_from','outbound_dep.latitude as outbound_departure_latitude','outbound_dep.longitude as outbound_departure_longitude',
+                'outbound_arrv.name as outbound_airport_arrival','outbound_arrv.timezone as outbound_arrival_timezone','outbound_arrv.city as outbound_airport_to','outbound_arrv.latitude as outbound_arrival_latitude','outbound_arrv.longitude as outbound_arrival_longitude',
                 'return.id as return_id', 'return.number as return_flight_number','return.price as return_price',
                 'return.departure_airport as return_departure', 'return.arrival_airport as return_arrival',
                 'return.departure_time as return_departure_time','return.duration as return_duration',
@@ -199,7 +227,7 @@ class Home extends Controller
             ->join('airlines as return_airline', 'return_airline.code', '=', 'return.airline')
             ->join('airports as return_dep', 'return_dep.code', '=', 'return.departure_airport')
             ->join('airports as return_arrv', 'return_arrv.code', '=', 'return.arrival_airport');
-            
+
             if(!empty($sort))
             {
                 if($sort == 1)

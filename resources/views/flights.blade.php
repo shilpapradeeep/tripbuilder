@@ -203,7 +203,15 @@
     text-indent: -15px;
     display: inline-block;
 }
-
+.cost-search {
+    background-color: #c62a82;
+    color: #fff;
+    display: block;
+    padding: 8px 5px;
+    border-radius: 55px;
+    transition: all .4s;
+    width: 100%;
+}
 </style> 
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         Start Banner
@@ -341,7 +349,8 @@
                         </div>
                     </div>
                   @endif
-
+                  <form id="cost_form" class="small" method="post" action="#">
+                      @csrf 
                   <div class="col-xl-12 col-lg-12 mb-30">
                       <div class="filter-bg">
                           <div class="flight-price-bg">
@@ -350,15 +359,22 @@
                           <div class="filters-section">
                             <div class="row">
                                 <div class="col-md-12 mb-10">
-                                  <input type="text" name="" id="" class="middle3px arlne" min="0" placeholder="Mininum amount"> 
+                                  <input type="text" name="min_cost" id="min_cost" class="middle3px arlne" min="0" placeholder="Mininum amount"> 
+                                  <span id="min_cost_error" class="error" style="color:red"></span>
                                 </div>
                                 <div class="col-md-12 mb-10">
-                                  <input type="text" name="" id="" class="middle3px arlne" min="0" placeholder="MAximum amount"> 
+                                  <input type="text" name="max_cost" id="max_cost" class="middle3px arlne" min="0" placeholder="MAximum amount"> 
+                                  <span id="max_cost_error" class="error" style="color:red"></span>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" id="btn-csubmit" class="cost-search">
+                                    <i style="display:none" id="cspin" class="fa fa-spinner" aria-hidden="true"></i>Search </button>
                                 </div>
                             </div>
                           </div>
                       </div>
                   </div>
+                  </form>
 
               </div>
             

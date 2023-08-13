@@ -29,7 +29,26 @@
         filter(d1,r1,tripType,airline_codes,1,sort);
     });
 
-    function filter(d1,r1,tripType,airline_codes=[],buttonid='',sort='')
+    jQuery("#cost_form").submit(function(e){
+        e.preventDefault();
+        $('#cspin').show();
+    
+        var airline_codes = new Array();
+            $(".arlne:checked").each(function() {
+                airline_codes.push($(this).val());
+            });
+        var d1 = $('#d1').val();
+        var r1 = $('#r1').val();
+        var tripType = $('#tripType').val();
+        var sort = this.value;
+        var min_cost = $('#min_cost').val();
+        var max_cost = $('#max_cost').val();
+    
+        filter(d1,r1,tripType,airline_codes,1,sort,min_cost,max_cost,'cost_search');
+    
+    });
+
+    function filter(d1,r1,tripType,airline_codes=[],buttonid='',sort='', min_cost='', max_cost='',type='')
     {
         $('#f-div'+buttonid).html('');
         $("#spin"+buttonid).show();
@@ -44,7 +63,10 @@
                 d1 : d1 ,
                 r1 : r1 ,
                 tripType : tripType,
-                sort : sort
+                sort : sort,
+                min_cost : min_cost,
+                max_cost : max_cost,
+                type : type
             },
             dataType:'JSON',
             success:function(data){
@@ -53,7 +75,7 @@
                 $('#f-div'+buttonid).html(data.html);
             },
             error:function(data) {
-                $('#spin').hide();
+                $('#spin'+buttonid).hide();
                 var response = JSON.parse(data.responseText);
                 $('.error').html('');
                 $.each(response.errors, function (key, value) {
@@ -66,11 +88,6 @@
 jQuery("#contact_form").submit(function(e){
     e.preventDefault();
     $('#spin').show();
-
-    var flight_type = $('input[name="flight_type"]:checked').val();
-    var tr_from = $('#tr_from').find(":selected").val();
-    var tr_to = $('#tr_to').find(":selected").val();
-   
 
     $.ajax({
         type:'POST',
