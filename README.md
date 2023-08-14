@@ -15,7 +15,7 @@ Here's a breakdown of the components I utilized to develop this application:
 </ul>
 
 <b>How to run this project.</b>
-To run this project, follow these steps:
+<br>To run this project, follow these steps:
 
 1.Create a new database and update the file .env with the new database information.
 2.Update the DATABASE CONSTANTS with the database info you created.
