@@ -17,9 +17,9 @@ Here's a breakdown of the components I utilized to develop this application:
 <b>How to run this project.</b>
 <br>To run this project, follow these steps:
 
-1.Create a new database and update the file .env with the new database information.
-2.Update the DATABASE CONSTANTS with the database info you created.
-3.Run the following commands in the terminal:
+1.Create a new database and update the file .env with the new database information.<br>
+2.Update the DATABASE CONSTANTS with the database info you created.<br>
+3.Run the following commands in the terminal:<br>
 
 Then run the following Commands:
 
