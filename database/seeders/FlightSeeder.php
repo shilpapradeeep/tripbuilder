@@ -100,19 +100,19 @@ class FlightSeeder extends Seeder
         DB::table('flights')->insert(      
         [
             "airline" => "QR",
-            "number" => "410",
+            "number" => "411",
             "departure_airport" => "YDT",
             "departure_time" => "10:55",
             "arrival_airport" => "YUL",
             "Duration" => 320,
-            "price" => "299.93"
+            "price" => "200"
         ]
         );
 
         DB::table('flights')->insert(      
         [
             "airline" => "AC",
-            "number" => "410",
+            "number" => "412",
             "departure_airport" => "YUL",
             "departure_time" => "09:55",
             "arrival_airport" => "YPK",
@@ -124,7 +124,7 @@ class FlightSeeder extends Seeder
         DB::table('flights')->insert(      
         [
             "airline" => "EY",
-            "number" => "410",
+            "number" => "413",
             "departure_airport" => "YPK",
             "departure_time" => "01:55",
             "arrival_airport" => "YUL",
