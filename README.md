@@ -21,13 +21,11 @@ Here's a breakdown of the components I utilized to develop this application:
 2.Update the DATABASE CONSTANTS with the database info you created.<br>
 3.Run the following commands in the terminal:<br>
 
-Then run the following Commands:
-
-$ git clone https://github.com/shilpapradeeep/tripbuilder.git    
-$ cd tripbuilder    
-$ composer install    
-$ php artisan migrate    
-$ php artisan db:seed    
-$ php artisan serve
+<b>$ git clone https://github.com/shilpapradeeep/tripbuilder.git</b>
+<b>$ cd tripbuilder</b>    
+<b>$ composer install</b>   
+<b>$ php artisan migrate </b>   
+<b>$ php artisan db:seed </b>   
+<b>$ php artisan serve</b>
 
 This will populate the database with testing data and run the app on port 8000. You should be able to access it by going to: http://127.0.0.1:8000 (or whatever domain you use to host the project).
