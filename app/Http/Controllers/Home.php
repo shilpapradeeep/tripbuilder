@@ -343,7 +343,7 @@ class Home extends Controller
                 ->whereIn('outbound.airline',$filter_condtion['airlines'])
                 ->orwhereIn('return.airline',$filter_condtion['airlines']);
             }
-            $flights = $flights_query->paginate(3);
+            $flights = $flights_query->paginate(2);
 
         }
         elseif($tripType == 'ROUNDTRIP') {
@@ -402,7 +402,7 @@ class Home extends Controller
                 ->whereIn('outbound.airline',$filter_condtion['airlines'])
                 ->orwhereIn('return.airline',$filter_condtion['airlines']);
             }
-            $flights = $flights_query->paginate(3);
+            $flights = $flights_query->paginate(2);
         }
         // Cache the search results for a specific duration (e.g., 1 hour)
         Cache::put($cacheKey, $flights, now()->addHours(1));
