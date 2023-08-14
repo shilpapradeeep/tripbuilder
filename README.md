@@ -1,4 +1,4 @@
-<b>Flight Booking Project by Shilpa<b>
+<b>Flight Booking Project by Shilpa</b>
 
 I am Shilpa - This is a flight booking project I created, this project runs with Laravel version 10.17.1 and required php version >8.1
 
