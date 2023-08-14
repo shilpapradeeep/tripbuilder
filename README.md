@@ -1,16 +1,18 @@
 <b>Flight Booking Project by Shilpa</b>
 
-I am Shilpa - This is a flight booking project I created, this project runs with Laravel version 10.17.1 and required php version >8.1
+This is a flight booking project I created using Laravel version 10.17.1, and it requires PHP version > 8.1.
 
-Here is a list of things I used to develop this application:
+Here's a breakdown of the components I utilized to develop this application:
 
-#Migrations database/migrations/*  
-#Database Seeding /*  
-#Resources/Collections app/Http/Resources/*  
-#Controllers app/Http/Controllers/*  
-#Request Validation app/Http/Requests/*  
-#Resource Routing routes/api.php  
-#Eloquent ORM / Models app/Model/*
+<ul>
+    <li>Migrations (database/migrations/*)</li>
+    <li>Database Seeding (/*)</li>
+    <li>Resources/Collections (app/Http/Resources/*)</li>
+    <li>Controllers (app/Http/Controllers/*)</li>
+    <li>Request Validation (app/Http/Requests/*)</li>
+    <li>Resource Routing (routes/api.php)</li>
+    <li>Eloquent ORM / Models (app/Model/*)</li>
+</ul>
 
 How to run this project.
 You will need a new database, and to run the following commands in the terminal.
