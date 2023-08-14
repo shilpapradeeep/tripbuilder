@@ -15,7 +15,6 @@ class Home extends Controller
 {
     public function __construct()
     {
-        ini_set('max_execution_time', 50000);
     }
     /**
      * Show the application dashboard.
@@ -28,6 +27,7 @@ class Home extends Controller
         return view('home',compact('airports'));
     }
 
+    // Handle form submission for flight search
     public function submit(Request $req)
     {
         $validation = $req->validate([
@@ -60,6 +60,7 @@ class Home extends Controller
         return response()->json($res);
     }
     
+    // Handle flight search based on user input
     public function searchFlights(Request $request) { 
 
         $departureAirport = $request->get('d1');
@@ -77,6 +78,7 @@ class Home extends Controller
         return view('flights',compact('flights','airports','tripType','airlines'));
     }
 
+    // Filter flight search results
     public function filterFlights(Request $request)
     {
         
@@ -115,6 +117,8 @@ class Home extends Controller
 
         return response()->json(['res'=>'1','html'=>$view]);
     }
+
+    // Handle pagination of filtered flight results
     public function filterPagination(Request $request)
     {
         $departureAirport = $request->get('d1');
@@ -137,6 +141,7 @@ class Home extends Controller
 
     }
 
+     // Fetch airport data
     private function fetchAirport()
     {
 
@@ -144,6 +149,7 @@ class Home extends Controller
         return $airports;
     }
 
+    // Fetch airline data
     private function fetchAirline()
     {
 
@@ -151,6 +157,7 @@ class Home extends Controller
         return $airlines;
     }
     
+    // Perform flight search based on various conditions
     public function actionFlightSearch($departureAirport,$arrivalAirport,$tripType,$filter_condtion=NULL,$sort=NULL,$page=NULL,$nearByAirport=NULL){
 
         $cacheKey = "flights:$departureAirport-$arrivalAirport-$tripType-$page";
