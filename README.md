@@ -14,11 +14,12 @@ Here's a breakdown of the components I utilized to develop this application:
     <li>Eloquent ORM / Models (app/Model/*)</li>
 </ul>
 
-How to run this project.
-You will need a new database, and to run the following commands in the terminal.
+<b>How to run this project.</b>
+To run this project, follow these steps:
 
-Create a database and update file .env with this new database informaiton.
-update DATABASE CONSTANTS with the database info you created.
+1.Create a new database and update the file .env with the new database information.
+2.Update the DATABASE CONSTANTS with the database info you created.
+3.Run the following commands in the terminal:
 
 Then run the following Commands:
 
@@ -29,7 +30,4 @@ $ php artisan migrate
 $ php artisan db:seed    
 $ php artisan serve
 
-This will populate the database with the testing data. 
-
-This will also run the app on port 8000, hence you should be able to run it by going to: http://127.0.0.1:8000 (or whatever domain you use to host the project)
-
+This will populate the database with testing data and run the app on port 8000. You should be able to access it by going to: http://127.0.0.1:8000 (or whatever domain you use to host the project).
