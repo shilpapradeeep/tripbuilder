@@ -4,51 +4,42 @@
     $('.select2').select2({
         minimumResultsForSearch: ''
     });
-    $('.arlne').change(function() {
-        var airline_codes = new Array();
-        $(".arlne:checked").each(function() {
-            airline_codes.push($(this).val());
-        });
-        var d1 = $('#d1').val();
-        var r1 = $('#r1').val();
-        var tripType = $('#tripType').val();
-
-        
-        filter(d1,r1,tripType,airline_codes,1);
+    $('.airline-filter').change(function() {
+        filterCall();
         
     });
     $('#sort_by').change(function() {
+        var sort = this.value;
+        filterCall(sort);
+    });
+
+    $('#nearbyairport').click(function(){
+         filterCall();
+    });
+    function filterCall(sort='',nearby='',lat='',log='')
+    {
         var airline_codes = new Array();
-        $(".arlne:checked").each(function() {
+        $(".airline-filter:checked").each(function() {
             airline_codes.push($(this).val());
         });
         var d1 = $('#d1').val();
         var r1 = $('#r1').val();
         var tripType = $('#tripType').val();
-        var sort = this.value;
-        filter(d1,r1,tripType,airline_codes,1,sort);
-    });
 
-    jQuery("#cost_form").submit(function(e){
-        e.preventDefault();
-        $('#cspin').show();
-    
-        var airline_codes = new Array();
-            $(".arlne:checked").each(function() {
-                airline_codes.push($(this).val());
-            });
-        var d1 = $('#d1').val();
-        var r1 = $('#r1').val();
-        var tripType = $('#tripType').val();
-        var sort = this.value;
-        var min_cost = $('#min_cost').val();
-        var max_cost = $('#max_cost').val();
-    
-        filter(d1,r1,tripType,airline_codes,1,sort,min_cost,max_cost,'cost_search');
-    
-    });
+        var lat = '';
+        var log = '';
+        if($("#nearbyairport").prop("checked") == true) {
+            var nearby = "1";
+            var lat = $("#tr_to").find(':selected').attr('data-lat');
+            var log = $("#tr_to").find(':selected').attr('data-log');
+        }
+        
+        filter(d1,r1,tripType,airline_codes,1,sort,nearby,lat,log);
+    }
 
-    function filter(d1,r1,tripType,airline_codes=[],buttonid='',sort='', min_cost='', max_cost='',type='')
+    
+
+    function filter(d1,r1,tripType,airline_codes=[],buttonid='',sort='',nearby='',lat='',log='')
     {
         $('#f-div'+buttonid).html('');
         $("#spin"+buttonid).show();
@@ -56,7 +47,7 @@
         $.ajax({
             type:'POST',
             // url:"/filter-flights",
-            url:"/filter-flights?d1="+d1+"&r1="+r1+"&tripType="+tripType+"&airline="+airline_codes+"&sort_by="+sort,
+            url:"/filter-flights?d1="+d1+"&r1="+r1+"&tripType="+tripType+"&airline="+airline_codes+"&sort_by="+sort+"&nearByAirport="+nearby+"&latitude="+lat+"&longitude="+log,
             data:{
                 "_token" : $('#csrf_token').val(),
                 airline_codes : airline_codes,
@@ -64,9 +55,9 @@
                 r1 : r1 ,
                 tripType : tripType,
                 sort : sort,
-                min_cost : min_cost,
-                max_cost : max_cost,
-                type : type
+                nearby : nearby,
+                lat : lat,
+                log : log
             },
             dataType:'JSON',
             success:function(data){

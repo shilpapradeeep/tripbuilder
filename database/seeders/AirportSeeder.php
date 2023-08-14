@@ -39,5 +39,31 @@ class AirportSeeder extends Seeder
             "timezone" => "America/Vancouver"
         ]
         );
+
+        DB::table('airports')->insert(      
+        [
+            "code" => "YDT",
+            "city_code" => "YVR",
+            "name" => "Boundary Bay Airport",
+            "city" => "Vancouver",
+            "country_code" => "CA",
+            "latitude" => 49.070999,
+            "longitude" => -123.004499,
+            "timezone" => "America/Vancouver"
+        ]
+        );
+
+        DB::table('airports')->insert(      
+            [
+                "code" => "YPK",
+                "city_code" => "YVR",
+                "name" => "Pitt Meadows Regional Airport",
+                "city" => "Vancouver",
+                "country_code" => "CA",
+                "latitude" => 49.22,
+                "longitude" => -122.71,
+                "timezone" => "America/Vancouver"
+            ]
+            );
     }
 }

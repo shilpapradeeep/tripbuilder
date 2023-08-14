@@ -33,7 +33,7 @@ class FlightSeeder extends Seeder
             "departure_time" => "08:55",
             "arrival_airport" => "YUL",
             "Duration" => 277,
-            "price" => "499.93"
+            "price" => "899.93"
         ]
         );
 
@@ -70,6 +70,66 @@ class FlightSeeder extends Seeder
             "arrival_airport" => "YUL",
             "Duration" => 250,
             "price" => "1499.93"
+        ]
+        );
+
+        DB::table('flights')->insert(      
+        [
+            "airline" => "EY",
+            "number" => "222",
+            "departure_airport" => "YUL",
+            "departure_time" => "08:55",
+            "arrival_airport" => "YDT",
+            "Duration" => 270,
+            "price" => "199.93"
+        ]
+        );
+
+        DB::table('flights')->insert(      
+        [
+            "airline" => "QR",
+            "number" => "410",
+            "departure_airport" => "YDT",
+            "departure_time" => "10:55",
+            "arrival_airport" => "YUL",
+            "Duration" => 300,
+            "price" => "299.93"
+        ]
+        );
+
+        DB::table('flights')->insert(      
+        [
+            "airline" => "QR",
+            "number" => "410",
+            "departure_airport" => "YDT",
+            "departure_time" => "10:55",
+            "arrival_airport" => "YUL",
+            "Duration" => 320,
+            "price" => "299.93"
+        ]
+        );
+
+        DB::table('flights')->insert(      
+        [
+            "airline" => "AC",
+            "number" => "410",
+            "departure_airport" => "YUL",
+            "departure_time" => "09:55",
+            "arrival_airport" => "YPK",
+            "Duration" => 330,
+            "price" => "499.99"
+        ]
+        );
+
+        DB::table('flights')->insert(      
+        [
+            "airline" => "EY",
+            "number" => "410",
+            "departure_airport" => "YPK",
+            "departure_time" => "01:55",
+            "arrival_airport" => "YUL",
+            "Duration" => 390,
+            "price" => "755.99"
         ]
         );
     }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('departure_time');
             $table->string('arrival_airport');
             $table->string('duration');
-            $table->string('price');
+            $table->float('price', 8, 2);
             $table->enum('status',['1','2'])->default('1');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();

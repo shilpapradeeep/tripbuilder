@@ -114,6 +114,6 @@ use Carbon\Carbon;
     </div>
 @else
 <div class="col-xl-12 col-lg-12 mb-30 mt-30">
-    <p style="text-align:center">No data available</p>
+    <p style="text-align:center">No flights available</p>
 </div>
 @endif

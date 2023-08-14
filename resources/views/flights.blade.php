@@ -284,7 +284,7 @@
                               @if(!$airports->isEmpty()) 
                               @foreach ($airports as $airport)
                                @php $selected = ( request()->get('r1') && $airport->code == request()->get('r1'))? 'selected' : ''; @endphp
-                                <option {{ $selected }} value="{{ $airport->code }}">{{ $airport->name, $airport->city, $airport->country_code }}</option> 
+                                <option  data-lat="{{ $airport->latitude }}" data-log="{{ $airport->longitude }}"  {{ $selected }} value="{{ $airport->code }}">{{ $airport->name, $airport->city, $airport->country_code }}</option> 
                               @endforeach
                               @endif
                               </select>
@@ -307,6 +307,7 @@
                         </div>
                       </div>
                     </form>
+                    
                     <div class="col-xl-4 col-lg-4 mb-30">
                         <label class="form-label-outside">Sort By</label>
                         <!--Select 2-->
@@ -340,7 +341,7 @@
                               <div class="row">
                                 @foreach ($airlines as $airline) 
                                   <div class="col-md-12">
-                                    <input type="checkbox" @if( !empty($airlines_selected) && in_array($airline->code, $airlines_selected) ) checked @endif name="airline" id="airline_{{ $airline->code }}"  class="airln-ck middle3px arlne" value="{{ $airline->code }}"> 
+                                    <input type="checkbox" @if( !empty($airlines_selected) && in_array($airline->code, $airlines_selected) ) checked @endif name="airline" id="airline_{{ $airline->code }}"  class="airln-ck middle3px arlne airline-filter"  value="{{ $airline->code }}"> 
                                     <label for="{{ $airline->code }}" class="airln-lb">{{ $airline->name }}</label>
                                   </div>
                                 @endforeach
@@ -354,21 +355,13 @@
                   <div class="col-xl-12 col-lg-12 mb-30">
                       <div class="filter-bg">
                           <div class="flight-price-bg">
-                              <span class="f-head">Filter by Cost</span>
+                              <span class="f-head">Filter by Near By Airport</span>
                           </div>
                           <div class="filters-section">
                             <div class="row">
                                 <div class="col-md-12 mb-10">
-                                  <input type="text" name="min_cost" id="min_cost" class="middle3px arlne" min="0" placeholder="Mininum amount"> 
-                                  <span id="min_cost_error" class="error" style="color:red"></span>
-                                </div>
-                                <div class="col-md-12 mb-10">
-                                  <input type="text" name="max_cost" id="max_cost" class="middle3px arlne" min="0" placeholder="MAximum amount"> 
-                                  <span id="max_cost_error" class="error" style="color:red"></span>
-                                </div>
-                                <div class="col-md-12">
-                                    <button type="submit" id="btn-csubmit" class="cost-search">
-                                    <i style="display:none" id="cspin" class="fa fa-spinner" aria-hidden="true"></i>Search </button>
+                                  <input type="checkbox" name="nearbyairport" id="nearbyairport" class="airln-ck middle3px arlne" @if( !empty(request()->get('nearby')) && request()->get('nearby') == 1 ) checked @endif>
+                                  <label class="airln-lb">Nearby Airport</label>
                                 </div>
                             </div>
                           </div>

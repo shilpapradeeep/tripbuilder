@@ -45,12 +45,5 @@ class AirlineSeeder extends Seeder
             ]
         );
 
-        DB::table('airlines')->insert(
-            [
-                "code" => "AI",
-                "name" => "Air India Limited",
-                "image" => "AIx2.webp"
-            ]
-        );
     }
 }
