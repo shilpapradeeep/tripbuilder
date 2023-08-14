@@ -99,7 +99,7 @@ class FlightSeeder extends Seeder
 
         DB::table('flights')->insert(      
         [
-            "airline" => "QR",
+            "airline" => "AC",
             "number" => "411",
             "departure_airport" => "YDT",
             "departure_time" => "10:55",
