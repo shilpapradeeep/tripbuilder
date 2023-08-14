@@ -1,8 +1,8 @@
-I am Shilpa - This is a flight booking project I created, using laravel framework. 
+<b>Flight Booking Project by Shilpa<b>
 
+I am Shilpa - This is a flight booking project I created, this project runs with Laravel version 10.17.1 and required php version >8.1
 
 Here is a list of things I used to develop this application:
-
 
 #Migrations database/migrations/*  
 #Database Seeding /*  
